@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import MovieCards from "./MovieCards";
 import axios from "axios";
 import { motion } from "framer-motion";
+import gump from "../assets/gump.png";
 // @ts-ignore
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -22,17 +23,25 @@ const MovieList = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    const promises = movieIds.map((id) =>
-      axios.get(`http://www.omdbapi.com/?i=${id}&apikey=${apiKey}`)
-    );
-    Promise.all(promises)
-      .then((responses) => {
-        const moviesData = responses.map((response) => response.data);
-        setMovies(moviesData);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const storageKey = "moviesData";
+    const cachedData = localStorage.getItem(storageKey);
+
+    if (cachedData) {
+      setMovies(JSON.parse(cachedData));
+    } else {
+      const promises = movieIds.map((id) =>
+        axios.get(`http://www.omdbapi.com/?i=${id}&apikey=${apiKey}`)
+      );
+      Promise.all(promises)
+        .then((responses) => {
+          const moviesData = responses.map((response) => response.data);
+          setMovies(moviesData);
+          localStorage.setItem(storageKey, JSON.stringify(moviesData));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, []);
 
   const size = movies.length - 1;
@@ -43,14 +52,15 @@ const MovieList = () => {
         style={{
           height: "80vh",
           width: "80vw",
-          backgroundImage: `url(https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg)`,
-          backgroundSize: "cover",
+          backgroundImage: `url(${gump})`,
+          backgroundSize: "contain",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           background: "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1))",
-          margin: "auto",
+          margin: "2.5rem 0 1.5rem 2rem",
+          borderRadius: "4.5px",
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
