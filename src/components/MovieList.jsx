@@ -51,42 +51,70 @@ const MovieList = () => {
       <motion.div
         style={{
           height: "80vh",
-          width: "80vw",
+          width: "70vw",
           backgroundImage: `url(${gump})`,
-          backgroundSize: "contain",
+          backgroundSize: "cover",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           background: "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1))",
-          margin: "2.5rem 0 1.5rem 2rem",
+          margin: "4.5rem 0rem 1.5rem 2rem",
           borderRadius: "4.5px",
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
+        <motion.div
+          style={{
+            position: "absolute",
+            top: 72,
+            left: 30,
+            height: "30%",
+            width: "20%",
+            backgroundColor: "black",
+            opacity: 0.7,
+            content: "",
+            zIndex: 1, // make sure the pseudo-element has a higher z-index than the image
+            backgroundImage:
+              "linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%)",
+          }}
+        ></motion.div>
         <motion.h2
           style={{
-            color: "white",
+            color: "black",
             marginBottom: "0.5rem",
-            textAlign: "center",
+            position: "absolute",
+            top: "8rem",
+            left: "3rem",
           }}
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
         >
-          {"lastMovie.Title"}
+          {lastMovie.Title}
         </motion.h2>
         <motion.h3
-          style={{ color: "white", margin: "0", textAlign: "center" }}
+          style={{
+            color: "black",
+            margin: "0",
+            textAlign: "center",
+            position: "absolute",
+            top: "10rem",
+            left: "3rem",
+          }}
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
         >
-          Rating: {"lastMovie.imdbRating"}
+          Rating: {lastMovie.imdbRating}
         </motion.h3>
       </motion.div>
+
+      <div className="featured">
+        <span>Featured</span>
+      </div>
 
       <div className="movies">
         {movies.slice(0, size).map((movie, index) => (

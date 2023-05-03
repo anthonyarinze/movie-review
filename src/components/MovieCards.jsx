@@ -9,7 +9,7 @@ const MovieCards = ({ title, image, rating, sauce }) => {
       style={{
         width: "200px",
         height: "300px",
-        backgroundColor: "#fff",
+        backgroundColor: "#141414",
         borderRadius: "10px",
         boxShadow: "0px 3px 5px rgba(0,0,0,0.2)",
         overflow: "hidden",
@@ -29,10 +29,12 @@ const MovieCards = ({ title, image, rating, sauce }) => {
       />
       <motion.h2
         style={{
-          fontSize: "24px",
+          fontSize: "20px",
           fontWeight: "bold",
-          color: "#333",
+          color: "#fff",
           margin: "10px",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

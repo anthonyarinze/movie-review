@@ -37,6 +37,7 @@ body {
   text-decoration: none;
   color: white;
   font-size: 2rem;
+  margin-left: 2rem;
 }
 
 .hub{
@@ -58,11 +59,19 @@ body {
   height: 40%;
 }
 
+.featured{
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+  font-size: 2rem;
+}
+
 .movies {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-gap: 1rem;
+  margin-left: 2rem;
 }
 
 @media screen and (max-width: 768px) {
