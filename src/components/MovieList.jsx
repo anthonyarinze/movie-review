@@ -21,6 +21,7 @@ const movieIds = [
 
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     const storageKey = "moviesData";
@@ -45,71 +46,66 @@ const MovieList = () => {
   }, []);
 
   const size = movies.length - 1;
-  const lastMovie = movies[size];
   return (
     <>
       <motion.div
         style={{
-          height: "80vh",
-          width: "70vw",
           backgroundImage: `url(${gump})`,
           backgroundSize: "cover",
+          width: "65vw",
+          height: "70vh",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1))",
-          margin: "4.5rem 0rem 1.5rem 2rem",
+          alignItems: "flex-start",
+          justifyContent: "flex-start",
+          color: "black",
+          marginLeft: "2rem",
+          marginTop: "4rem",
           borderRadius: "4.5px",
+          position: "relative",
+          overflow: "hidden", // added to hide the gradient when not hovering
+          transition: "background-color 0.5s ease", // added for smooth transition
         }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        whileHover={{
+          backgroundColor: "rgba(0,0,0,0.5)", // added background color on hover
+          background: "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3))", // added initial gradient
+          opacity: 0.5,
+          zIndex: 1,
+          backgroundImage: `url(${gump})`,
+          backgroundSize: "cover",
+          color: "white",
+        }}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
       >
-        <motion.div
-          style={{
-            position: "absolute",
-            top: 72,
-            left: 30,
-            height: "30%",
-            width: "20%",
-            backgroundColor: "black",
-            opacity: 0.7,
-            content: "",
-            zIndex: 1, // make sure the pseudo-element has a higher z-index than the image
-            backgroundImage:
-              "linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%)",
-          }}
-        ></motion.div>
-        <motion.h2
-          style={{
-            color: "black",
-            marginBottom: "0.5rem",
-            position: "absolute",
-            top: "8rem",
-            left: "3rem",
-          }}
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-        >
-          {lastMovie.Title}
-        </motion.h2>
-        <motion.h3
-          style={{
-            color: "black",
-            margin: "0",
-            textAlign: "center",
-            position: "absolute",
-            top: "10rem",
-            left: "3rem",
-          }}
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-        >
-          Rating: {lastMovie.imdbRating}
-        </motion.h3>
+        {isHovering && (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                top: "10rem",
+                left: "1rem",
+                fontSize: "2rem",
+                fontWeight: "bold",
+                zIndex: 1,
+                color: "black",
+              }}
+            >
+              Forrest Gump
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                top: "13rem",
+                zIndex: 1,
+                left: "1rem",
+                fontSize: "1.5rem",
+                color: "black",
+              }}
+            >
+              Rating: 8.8 (IMDB)
+            </div>
+          </>
+        )}
       </motion.div>
 
       <div className="featured">
